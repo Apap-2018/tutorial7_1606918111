@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http:/wwww.thymeleaf.org">
+<head>
+    <title>View Pilot</title>
+    <Object th:include="fragments/fragment :: css" th:remove="tag"></Object>
+    <Object th:include="fragments/fragment :: js" th:remove="tag"></Object>
+</head>
+<body th:switch="${pilot}">
+    
+    <nav th:replace="fragments/fragment :: navbar(content='VIEW PILOT')"></nav>
+    <div class="container-fluid">
+        <h3 th:case="null">Maaf pilot tidak ditemukan</h3>
+        <div th:case="*">
+                <h3 th:text=" 'Pilot License number: '+ ${pilot.licenseNumber}"></h3>
+                <h3 th:text=" 'Name: ' +${pilot.name}"></h3>
+                <h3 th:text=" 'Fly-hour: '+${pilot.flyHour}"></h3>
+                <h3 th:text="${pilot.flyHour} >=100 ? 'Status: Pilot Senior' : 'Status: Pilot Junior' "></h3>
+                
+                <form th:action="@{/pilot/update/} + ${pilot.licenseNumber}">
+                    <button type="submit" >Update Pilot</button>
+                </form>
+                <form th:action="@{/pilot/delete/} + ${pilot.licenseNumber}">
+                    <button type="submit">Delete Pilot</button>
+                </form>
+                <br>
+               
+                <form th:action="@{/flight/delete}" th:object="${pilot}" method="POST">
+                    <input type="hidden" th:value="*{id}" />
+                    <caption>Flights</caption>
+                    <br><br>
+                    <table border="I">
+                        <thead>
+                            <tr>
+                                <th style="text-align: center">No </th>
+                                <th style="text-align: center">Flight Number</th>
+                                <th style="text-align: center">Origin</th>
+                                <th style="text-align: center">Destination</th>
+                                <th style="text-align: center">Time</th>
+                                <th style="text-align: center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="flight, iterationStatus : *{pilotFlight}">
+
+                                <td th:text="${iterationStatus.count}"></td>
+                                <td th:text="${flight.flightNumber}"></td>
+                                <td th:text="${flight.origin}"></td>
+                                <td th:text="${flight.destination}"></td>
+                                <td th:text="${flight.time}"></td>
+                                <td>
+                                    <input type="checkbox" th:field="*{pilotFlight}" th:value="${flight.id}">
+                                    <label th:for="${#ids.prev('pilotFlight')}">Hapus</label>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br><br>
+                    <button type="submit">Delete Selected Flight</button>
+
+
+                </form>
+                <br>
+                <form th:action="@{/flight/add/} + ${pilot.licenseNumber}">
+                    <button value="submit">Add Flight</button>
+                </form>
+        
+        </div>
+    </div> 
+</body>
+</html>

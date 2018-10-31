@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xlmns:th="http://www.thymeleaf.org">
+<head>
+        
+    <title>Home</title>
+    <Object th:include="fragments/fragment :: css" th:remove="tag"></Object>
+    <Object th:include="fragments/fragment :: js" th:remove="tag"></Object>
+
+</head>
+
+<body>
+    <nav th:replace="fragments/fragment :: navbar(content='APAP')"></nav>
+
+    <div class="container-fluid">
+        <br>
+        <h2>Hello</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        Tambah Pilot
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Fitur untuk menambah Pilot</p>
+                        <a th:href="@{/pilot/add}">Tambah</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+
+    <!-- <h3>Tambah Pilot</h3>
+    <td><a th:href="@{/pilot/add}">Tambah</a></td>
+
+    <h3>Cari pilot berdasarkan nomor lisensi</h3>
+    <form th:action="@{/pilot/view}" method="GET">
+        License Number: <br>
+            <input type="text" name="licenseNumber"/>
+            <button type="submit">Cari</button>
+    </form>
+    <h3>Cari penerbangan</h3>
+
+    <form th:action="@{/flight/view}" method="GET">
+        Flight Number: <br>
+        <input type="text" name="flightNumber"/>
+        <button type="submit">Cara</button>
+    </form> -->
+    <div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    Cari Pilot berdasarkan Nomor Lisensi
+                </div>
+                <form th:action="@{/pilot/view}" method="GET">
+                    <div class="card-body">
+                        <label for="licenseNumber">Nomor Lisensi:</label>
+                        <input type="text" name="licenseNumber" class="form-control"/>
+                        <p></p>
+                        <button type="submit" class="btn btn-primary">Cari</button>
+
+                    </div>
+                        
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+    </div>
+</body>
+</html>

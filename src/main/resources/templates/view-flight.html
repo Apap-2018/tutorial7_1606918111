@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http:/wwww.thymeleaf.org">
+<head>
+    <title>Find flight</title>
+    <Object th:include="fragments/fragment :: css" th:remove="tag"></Object>
+    <Object th:include="fragments/fragment :: js" th:remove="tag"></Object>
+</head>
+<body>
+    <nav th:replace="fragments/fragment :: navbar(content='View Pilot')"></nav>
+    <p th:text=${#flight}></p>
+    <div th:each="var: ${#flight}">
+        <h2 th:text=${var.key}></h2>
+        <h3 th:text=${var.value}></h3>
+    </div>
+    
+    <h3 th:case="null">Maaf flight tidak ditemukan</h3>
+    <div th:case="*">
+            <h3 th:text=" 'Flight number: ' + ${flight.flightNumber}"></h3>
+            <h3 th:text=" 'Pilots name: ' + ${flight.getPilot().name}"></h3>
+            <h3 th:text=" 'LicenseNumber: '+ ${flight.getPilot().licenseNumber}"></h3>
+
+    <a th:href="@{/flight/update/(flightNumber=${flight.flightNumber})}">Update flight</a>
+    <a th:href="@{/flight/delete/{flightNumber}(flightNumber=${flight.flightNumber})}">Delete flight</a>
+    </div>
+
+</body>
+</html>

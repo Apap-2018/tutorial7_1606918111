@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add Flight</title>
+    <Object th:include="fragments/fragment :: css" th:remove="tag"></Object>
+    <Object th:include="fragments/fragment :: js" th:remove="tag"></Object>    
+</head>
+
+<body>
+    <nav th:replace="fragments/fragment :: navbar(content='TAMBAH PENERBANGAN')"></nav>
+    <br><br>
+    <div class="container-fluid">
+        <form th:action="@{/flight/add/} + ${pilot.licenseNumber}" th:object="${pilot}" method="POST">
+            <table border="I">
+                <thead>
+                    <tr>
+                        <th style="text-align: center">Flight Number</th>
+                        <th style="text-align: center">Origin</th>
+                        <th style="text-align: center">Destination</th>
+                        <th style="text-align: center">Time</th>
+                        <th>
+                            <button type="submit" name="addRow" class="btn btn-primary btn-sm">Add flight</button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+					<tr th:each="flight, iterator : *{pilotFlight}">
+						<th>
+							<input type="text" name="flightNumber" class="form-control" th:field="*{pilotFlight[__${iterator.index}__].flightNumber}">
+						</th>
+						<th>
+							<input type="text" name="origin" class="form-control" th:field="*{pilotFlight[__${iterator.index}__].origin}">
+						</th>
+						<th>
+							<input type="text" name="destination" class="form-control" th:field="*{pilotFlight[__${iterator.index}__].destination}">
+						</th>
+						<th>
+							<input type="date" name="time" class="form-control" th:field="*{pilotFlight[__${iterator.index}__].time}">
+						</th>	
+					</tr>
+				</tbody>	
+            </table>
+            <button class="btn btn-primary" type="submit" name="save">Submit</button>
+
+        </form>
+
+
+
+
+        <!-- <h1>Hello</h1>
+        <h3>Tambah Penerbangan</h3>
+        <form th:action="@{/flight/add}" th:object="${flight}" method="POST">
+            <input type="hidden" th:field="*{pilot}" />
+            Flight Number: <br>
+            <input type="text" name="flightNumber" />
+            <br>
+            Origin: <br>
+            <input type="text" name="origin" />
+            <br>
+            Destination: <br>
+            <input type="text" name="destination" />
+            <br>
+            Time: <br>
+            <input type="date" name="time" />
+            <br><br>
+            <button type="submit">Submit</button>
+        </form> -->
+    </div>
+</body>
+</html>
