@@ -39,22 +39,22 @@ public class PilotController {
     }
 
     @PostMapping(value="/add")
-    public PilotModel addPilotSubmit(@RequestBody PilotModel pilot){
+    public PilotModel addPilotSubmit(@RequestBody PilotModel pilot) {
         return pilotService.addPilot(pilot);
     }
 
     @GetMapping(value = "/view/{licenseNumber}")
-    public PilotModel pilotView(@PathVariable("licenseNumber") String licenseNumber){
+    public PilotModel pilotView(@PathVariable("licenseNumber") String licenseNumber) {
         PilotModel pilot = pilotService.getPilotDetailByLicenseNumber(licenseNumber).get();
         return pilot;
     }
+
     @DeleteMapping(value = "/delete")
     public String deletePilot(@RequestParam("pilotId") long pilotId){
         PilotModel pilot = pilotService.getPilotDetailById(pilotId).get();
         pilotService.delete(pilot);
         //todo implement success html
         return"success";
-
     }
 
     @PutMapping(value = "/update/{pilotId}")
@@ -62,7 +62,7 @@ public class PilotController {
             @RequestParam("name") String name,
             @RequestParam("flyHour") int flyHour) {
         PilotModel pilot= pilotService.getPilotDetailById(pilotId).get();
-        if(pilot.equals(null)){
+        if(pilot.equals(null)) {
             return "Couldn't find your pilot";
         } 
         pilot.setName(name);
@@ -78,11 +78,12 @@ public class PilotController {
     }
 
     @GetMapping(value="/full/{licenseNumber}")
-    public PilotDetail postStatus(@PathVariable("licenseNumber") String licenseNumber) throws Exception{
+    public PilotDetail postStatus(@PathVariable("licenseNumber") String licenseNumber) throws Exception {
         String path = Setting.pilotUrl + "/pilot";
         PilotModel pilot = pilotService.getPilotDetailByLicenseNumber(licenseNumber).get();
         PilotDetail detail = restTemplate.postForObject(path, pilot, PilotDetail.class);
         return detail;
     }
+
 
 }
